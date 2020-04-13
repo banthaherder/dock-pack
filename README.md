@@ -15,13 +15,13 @@ Packer usng a Docker builder and Ansible provisioner to craft Docker images and 
 │       │   ├── files                   <----- Directory containing files for configuring Nginx.
 │       │   │   ├── nginx.conf          <----- Nginx configuration file.
 │       │   │   └── banthaherder.com    <----- Default site config.
-│       │   └── tasks                   <----- Directory for Ubuntu tasks.
-│       │       └── main.yaml           <----- Tasks file for Ubuntu tasks.
+│       │   └── tasks                   <----- Directory for common tasks.
+│       │       └── main.yaml           <----- Tasks file for common tasks.
 │       └── ubuntu_install              <----- Directory containing tasks specific to Ubuntu.
 │           └── tasks                   <----- Directory for Ubuntu tasks.
 │               └── main.yaml           <----- Tasks file for Ubuntu tasks.
-├── index.html
-└── packer.json
+├── index.html                          <----- Demo html file.
+└── packer.json                         <----- Packer configuration file.
 ```
 
 ## Setup
