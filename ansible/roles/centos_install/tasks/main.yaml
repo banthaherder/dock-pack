@@ -1,0 +1,12 @@
+---  
+- name: Install epel-release
+  dnf:
+    name: epel-release
+    state: latest
+    update_cache: yes
+
+- name: Install nginx
+  dnf:
+    name: nginx
+    state: latest
+    update_cache: yes

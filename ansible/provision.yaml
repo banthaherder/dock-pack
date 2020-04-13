@@ -1,0 +1,29 @@
+---
+- name: Configure NGINX
+  hosts: all
+  gather_facts: no
+  pre_tasks:
+  - name: Ubuntu install python
+    raw: 'apt-get update && apt-get -y install python3'
+    when: base_os == "ubuntu"
+
+  - name: CentOS install python
+    raw: 'dnf update -y && dnf -y install python3'
+    when: base_os == "centos"
+
+  - name: Collect facts after python is setup
+    setup:
+  tasks:
+    - name: Install for CentOS distro
+      include_role:
+        name: centos_install
+      when: "ansible_facts['os_family'] == 'RedHat'"
+
+    - name: Install for Ubuntu distro
+      include_role:
+        name: ubuntu_install
+      when: "ansible_facts['os_family'] == 'Debian'"
+
+    - name: Standard Nginx configuration
+      include_role:
+        name: common

@@ -1,0 +1,39 @@
+---
+- name: Create sites-available
+  file:
+    path: /etc/nginx/sites-available/
+    state: directory
+    mode: '0755'
+
+- name: Create sites-enabled
+  file:
+    path: /etc/nginx/sites-enabled/
+    state: directory
+    mode: '0755'
+
+- name: Copy over nginx.conf
+  copy:
+    src: nginx.conf
+    dest: /etc/nginx/
+
+- name: Remove default site symlink
+  file:
+   path: /etc/nginx/sites-enabled/default
+   state: absent
+
+- name: Copy over site config
+  copy:
+    src: banthaherder.com
+    dest: /etc/nginx/sites-available/banthaherder.com
+
+- name: Link site config
+  file:
+    src: /etc/nginx/sites-available/banthaherder.com
+    dest: /etc/nginx/sites-enabled/banthaherder.com
+    state: link
+
+- name: Create a html serving dir
+  file:
+    path: /html
+    state: directory
+    mode: '0755'

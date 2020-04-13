@@ -1,0 +1,34 @@
+{
+    "variables": {
+        "base_os": ""
+      },
+
+    "builders": [{
+        "type": "docker",
+        "image": "{{user `base_os`}}:latest",
+        "commit": true,
+        "changes": [
+            "EXPOSE 80",
+            "CMD nginx -g 'daemon off;'",
+            "ENTRYPOINT [\"\"]"
+        ]
+    }],
+
+    "provisioners": [
+      {
+        "type": "ansible",
+        "user": "root",
+        "playbook_file": "ansible/provision.yaml",
+        "extra_arguments": [ "--extra-vars", "base_os={{user `base_os`}}"]
+    }],
+
+    "post-processors": [[ {
+        "type": "docker-tag",
+        "repository": "docker.io/banthaherder/nginx-{{user `base_os`}}",
+        "tag": "latest"
+    },
+    {
+    "type": "docker-push",
+        "login": "false"
+    }]]
+}
